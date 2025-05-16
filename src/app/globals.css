@@ -1,0 +1,143 @@
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
+
+:root {
+  /* New Design System Variables */
+  --primary: #6c47ff;
+  --primary-foreground: #fff;
+  --primary-bg: rgba(108, 71, 255, 0.08);
+  --primary-bg-hover: rgba(108, 71, 255, 0.15);
+
+  --background: #fafbfc;
+  --foreground: #18181b;
+  
+  --card-bg: #fff;
+  --card-shadow: 0 4px 32px 0 rgba(108,71,255,0.06);
+  --card-radius: 1.25rem;
+
+  --border: 1px solid #e5e7eb;
+  --border-radius: 0.5rem; /* Shared, check if value matches or if specific components need override */
+
+  --muted: #6b7280;
+  
+  --destructive: #dc2626;
+  --destructive-foreground: #fff;
+  --destructive-hover: #b91c1c;
+
+  --error-bg: #fef2f2;
+  --error: #dc2626;
+
+  /* Layout & Spacing */
+  --section-spacing: 6rem;
+  --section-spacing-sm: 3rem;
+
+  /* Header Specific */
+  --header-height: 4rem;
+  --header-bg: rgba(255, 255, 255, 0.8);
+  --header-blur: 16px;
+  --header-shadow: 0 2px 16px 0 rgba(0,0,0,0.04), 0 1.5px 0 0 rgba(0,0,0,0.03);
+  --header-border: 1px solid rgba(0,0,0,0.07);
+  
+  /* Footer Specific */
+  --footer-bg: rgba(255,255,255,0.85);
+  --footer-border: 1px solid rgba(0,0,0,0.07);
+  --footer-blur: 8px;
+  --footer-radius: 0.75rem;
+  --footer-shadow: 0 2px 16px 0 rgba(0,0,0,0.04);
+  --footer-muted: #6b7280;
+
+  /* Transitions & Others */
+  --transition: 0.2s cubic-bezier(.4,0,.2,1);
+
+  /* Retained from original globals.css if not directly replaced, or for reference */
+  --input: 214.3 31.8% 91.4%; /* Original, may need updating if new input styles don't cover */
+  --ring: 222.2 84% 4.9%; /* Original, may need updating */
+  --secondary: 210 40% 96.1%; /* Original */
+  --secondary-foreground: 222.2 47.4% 11.2%; /* Original */
+  --accent: 210 40% 96.1%; /* Original */
+  --accent-foreground: 222.2 47.4% 11.2%; /* Original */
+  /* --radius: 0.5rem; /* Already defined, ensuring consistency */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* New Design System Variables - Dark Mode */
+    --background: #18181b; /* Overrides --background-dark naming for simplicity */
+    --foreground: #fafafa; /* Overrides --foreground-dark naming for simplicity */
+
+    --card-bg: #23232a; /* Overrides --card-bg-dark */
+    --border: 1px solid #23232a; /* Overrides --border-dark */
+    --muted: #a1a1aa; /* Overrides --muted-dark */
+
+    /* Header Specific - Dark Mode */
+    --header-bg: rgba(34, 34, 34, 0.8); /* Overrides --header-bg-dark */
+    --header-border: 1px solid rgba(255,255,255,0.07); /* Overrides --header-border-dark */
+
+    /* Footer Specific - Dark Mode */
+    --footer-bg: rgba(24,24,27,0.85); /* Overrides --footer-bg-dark */
+    --footer-border: 1px solid rgba(255,255,255,0.07); /* Overrides --footer-border-dark */
+    --footer-muted: #a1a1aa; /* Overrides --footer-muted-dark */
+    
+    /* Admin Specific - Dark Mode */
+    --error-bg: #3b1d1d; /* Overrides --error-bg-dark */
+
+    /* Retained/adapted from original globals.css dark theme if not directly replaced */
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --primary: #6c47ff; /* Primary color often stays same or similar in dark mode for branding */
+    --primary-foreground: #fff;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --destructive: #b91c1c; /* Adjusted destructive for dark, or keep as is */
+    --destructive-foreground: #fff;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+  }
+}
+
+/* Keep the @theme block if you plan to use it for other Tailwind v4 specific features,
+   but the HSL values above are what tailwind.config.js primarily needs for hsl(var(--...)) */
+
+html {
+  font-size: 16px;
+  text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 18px;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Inter, sans-serif; /* Explicitly set font stack */
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+p {
+  margin-bottom: 1.5rem;
+}
+
+a {
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.prose {
+  max-width: 65ch;
+  margin: 0 auto;
+  padding: 0 1rem;
+}

@@ -1,0 +1,17 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .dark { display: none; }
+    @media (prefers-color-scheme: dark) {
+      .light { display: none; }
+      .dark { display: block; }
+    }
+  </style>
+  <g class="light">
+    <circle cx="60" cy="60" r="58" stroke="#0ea5e9" stroke-width="4" fill="none"/>
+    <path d="M40 45C40 35 45 30 60 30C75 30 80 35 80 45C80 55 75 60 60 60C45 60 40 65 40 75C40 85 45 90 60 90C75 90 80 85 80 75" stroke="#0c4a6e" stroke-width="8" stroke-linecap="round" fill="none"/>
+  </g>
+  <g class="dark">
+    <circle cx="60" cy="60" r="58" stroke="#38bdf8" stroke-width="4" fill="none"/>
+    <path d="M40 45C40 35 45 30 60 30C75 30 80 35 80 45C80 55 75 60 60 60C45 60 40 65 40 75C40 85 45 90 60 90C75 90 80 85 80 75" stroke="#7dd3fc" stroke-width="8" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>
