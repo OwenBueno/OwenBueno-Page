@@ -25,7 +25,7 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            Welcome to My Creative Space
+            Welcome to My World
           </motion.h1>
           <motion.p 
             className={styles.heroSubtitle}
@@ -59,7 +59,7 @@ export default function HomePage() {
             <div className={styles.featureCardContent}>
               <h3 className={styles.featureCardTitle}>Creative Musings</h3>
               <p className={styles.featureCardText}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+                Honest takes, random musings, and reflections on life, creativity, and everything in between. This is where I think out loud and explore ideas that matter to me.
               </p>
             </div>
           </Card>
@@ -67,7 +67,7 @@ export default function HomePage() {
             <div className={styles.featureCardContent}>
               <h3 className={styles.featureCardTitle}>Tech Explorations</h3>
               <p className={styles.featureCardText}>
-                Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.
+              A showcase of what I'm building—code experiments, tools, designs, and side projects. I share the process, not just the results, so you can see how things evolve.
               </p>
             </div>
           </Card>
@@ -75,7 +75,7 @@ export default function HomePage() {
             <div className={styles.featureCardContent}>
               <h3 className={styles.featureCardTitle}>Personal Growth</h3>
               <p className={styles.featureCardText}>
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Vivamus magna justo, lacinia eget consectetur.
+              A bit of who I am beyond the screen—my background, what drives me, and the journey that brought me here. Think of it as the human layer behind the content.
               </p>
             </div>
           </Card>

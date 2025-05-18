@@ -20,13 +20,6 @@
   border-bottom: var(--header-border);
 }
 
-@media (prefers-color-scheme: dark) {
-  .header, .headerScrolled {
-    background: var(--header-bg-dark);
-    border-bottom: var(--header-border-dark);
-  }
-}
-
 .container {
   max-width: 64rem;
   margin: 0 auto;
@@ -53,10 +46,10 @@
   transition: color var(--transition);
 }
 
-@media (prefers-color-scheme: dark) {
-  .logoText {
-    color: var(--foreground-dark);
-  }
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Gap between nav and theme toggle / mobile toggle */
 }
 
 .desktopNav {
@@ -90,13 +83,13 @@
 
 .navLink:hover,
 .navLink:focus-visible {
-  background: var(--primary-bg);
+  background: var(--primary-bg, rgba(var(--primary-rgb), 0.1)); /* Fallback for primary-bg */
   color: var(--primary);
 }
 
 .navLinkActive {
   color: var(--primary);
-  background: var(--primary-bg);
+  background: var(--primary-bg, rgba(var(--primary-rgb), 0.1)); /* Fallback for primary-bg */
 }
 
 .navIndicator {
@@ -107,6 +100,39 @@
   border-radius: 2px;
 }
 
+/* Theme Toggle Button */
+.themeToggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border-radius: var(--border-radius);
+  background: transparent; 
+  border: none;
+  color: var(--muted);
+  transition: background var(--transition), color var(--transition);
+  cursor: pointer;
+  outline: none;
+}
+
+.themeToggle:hover,
+.themeToggle:focus-visible {
+  background: var(--primary-bg, rgba(var(--primary-rgb), 0.08));
+  color: var(--primary);
+}
+
+.desktopThemeToggle {
+  display: none; /* Hidden by default, shown on desktop */
+}
+
+@media (min-width: 768px) {
+  .desktopThemeToggle {
+    display: flex;
+  }
+}
+
 .mobileToggle {
   display: flex;
   align-items: center;
@@ -114,17 +140,18 @@
   width: 2.5rem;
   height: 2.5rem;
   border-radius: var(--border-radius);
-  background: var(--header-bg);
-  border: var(--header-border);
-  transition: background var(--transition), border var(--transition);
+  background: transparent; /* Match theme toggle default */
+  color: var(--muted); /* Match theme toggle default */
+  border: none;
+  transition: background var(--transition), border var(--transition), color var(--transition);
   cursor: pointer;
   outline: none;
-  border: none;
 }
 
 .mobileToggle:hover,
 .mobileToggle:focus-visible {
-  background: var(--primary-bg-hover);
+  background: var(--primary-bg, rgba(var(--primary-rgb), 0.08));
+  color: var(--primary);
 }
 
 @media (min-width: 768px) {
@@ -136,21 +163,20 @@
 .mobileMenuWrapper {
   display: block;
   overflow: hidden;
-}
-
-.mobileMenu {
+  position: absolute;
+  top: var(--header-height);
+  left: 0;
+  right: 0;
   background: var(--header-bg);
   backdrop-filter: blur(var(--header-blur));
   border-top: var(--header-border);
-  padding: 1rem 1.5rem;
-  transition: background var(--transition);
+  box-shadow: var(--header-shadow);
+  z-index: -1; /* Ensure it is behind the main header content but above page */
 }
 
-@media (prefers-color-scheme: dark) {
-  .mobileMenu {
-    background: var(--header-bg-dark);
-    border-top: var(--header-border-dark);
-  }
+.mobileMenu {
+  /* Styles moved to mobileMenuWrapper for better animation control */
+  padding: 1rem 1.5rem;
 }
 
 .mobileMenuList {
@@ -179,28 +205,19 @@
 
 .mobileNavLink:hover,
 .mobileNavLink:focus-visible {
-  background: var(--primary-bg);
+  background: var(--primary-bg, rgba(var(--primary-rgb), 0.1));
   color: var(--primary);
 }
 
 .mobileNavLinkActive {
   color: var(--primary);
-  background: var(--primary-bg);
+  background: var(--primary-bg, rgba(var(--primary-rgb), 0.1));
 }
 
-@media (prefers-color-scheme: dark) {
-  .logoText {
-    color: var(--foreground-dark);
-  }
-  .navLink,
-  .navLinkActive,
-  .mobileNavLink,
-  .mobileNavLinkActive {
-    color: var(--foreground-dark);
-  }
-  .navLinkActive,
-  .mobileNavLinkActive {
-    color: var(--primary);
-    background: var(--primary-bg);
-  }
+.mobileThemeToggle {
+  gap: 0.75rem; /* Space between icon and text */
+}
+
+.themeIcon {
+  /* For potential specific styling of icons within the theme toggle if needed */
 } 

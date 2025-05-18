@@ -2,17 +2,14 @@
 
 .page {
   min-height: 100vh;
-  width: 100vw;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--background);
-  padding: 0;
-}
-@media (prefers-color-scheme: dark) {
-  .page {
-    background: var(--background-dark);
-  }
+  padding: 1.5rem;
+  box-sizing: border-box;
+  transition: background 0.3s ease;
 }
 
 .card {
@@ -25,11 +22,7 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
-}
-@media (prefers-color-scheme: dark) {
-  .card {
-    background: var(--card-bg-dark);
-  }
+  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 .header {
@@ -42,6 +35,7 @@
   font-size: 2rem;
   font-weight: 700;
   color: var(--primary);
+  transition: color 0.3s ease;
 }
 .logoutForm {
   margin: 0;
@@ -55,10 +49,10 @@
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.18s;
+  transition: background 0.18s ease, color 0.18s ease;
 }
 .logoutButton:hover, .logoutButton:focus-visible {
-  background: var(--destructive-hover);
+  background: var(--destructive-hover, #b91c1c);
 }
 
 .section {
@@ -71,18 +65,12 @@
   font-weight: 600;
   color: var(--foreground);
   margin-bottom: 0.5rem;
+  transition: color 0.3s ease;
 }
 .sectionSubtitle {
   color: var(--muted);
   margin-bottom: 1.5rem;
-}
-@media (prefers-color-scheme: dark) {
-  .sectionTitle {
-    color: var(--foreground-dark);
-  }
-  .sectionSubtitle {
-    color: var(--muted-dark);
-  }
+  transition: color 0.3s ease;
 }
 
 .grid {
@@ -103,21 +91,19 @@
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-}
-@media (prefers-color-scheme: dark) {
-  .gridCard {
-    background: var(--card-bg-dark);
-  }
+  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 .gridCardTitle {
   font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
   color: var(--foreground);
+  transition: color 0.3s ease;
 }
 .gridCardText {
   color: var(--muted);
   margin-bottom: 1rem;
+  transition: color 0.3s ease;
 }
 .gridCardButton {
   display: inline-block;
@@ -128,9 +114,9 @@
   font-size: 1rem;
   font-weight: 500;
   text-decoration: none;
-  transition: background 0.18s;
+  transition: background 0.18s ease, color 0.18s ease;
   margin-top: 0.5rem;
 }
 .gridCardButton:hover, .gridCardButton:focus-visible {
-  background: #5936d8;
+  background: var(--primary-light, #5936d8);
 } 

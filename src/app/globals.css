@@ -4,30 +4,42 @@
 @import "@fontsource/inter/700.css";
 
 :root {
-  /* New Design System Variables */
-  --primary: #6c47ff;
-  --primary-foreground: #fff;
-  --primary-bg: rgba(108, 71, 255, 0.08);
-  --primary-bg-hover: rgba(108, 71, 255, 0.15);
-
-  --background: #fafbfc;
-  --foreground: #18181b;
+  /* Core colors - Light Mode Defaults */
+  --foreground: #0f172a;
+  --background: #ffffff;
+  --muted: #64748b;
   
-  --card-bg: #fff;
-  --card-shadow: 0 4px 32px 0 rgba(108,71,255,0.06);
-  --card-radius: 1.25rem;
-
+  /* Primary colors */
+  --primary: #6366f1;
+  --primary-rgb: 99, 102, 241;
+  --primary-foreground: #ffffff;
+  --primary-light: #a5b4fc;
+  --primary-light-rgb: 165, 180, 252;
+  
+  /* Secondary colors */
+  --secondary: #8b5cf6;
+  --secondary-rgb: 139, 92, 246;
+  --secondary-foreground: #ffffff;
+  
+  /* Accent colors */
+  --accent: #0ea5e9;
+  --accent-rgb: 14, 165, 233;
+  --accent-foreground: #ffffff;
+  
+  /* UI elements */
+  --card-bg: #ffffff;
+  --card-radius: 12px;
+  --border-radius: 12px;
+  --card-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);
   --border: 1px solid #e5e7eb;
-  --border-radius: 0.5rem; /* Shared, check if value matches or if specific components need override */
-
-  --muted: #6b7280;
   
+  /* State colors */
   --destructive: #dc2626;
-  --destructive-foreground: #fff;
-  --destructive-hover: #b91c1c;
-
-  --error-bg: #fef2f2;
-  --error: #dc2626;
+  --destructive-foreground: #ffffff;
+  --success: #22c55e;
+  --success-foreground: #ffffff;
+  --warning: #f59e0b;
+  --warning-foreground: #ffffff;
 
   /* Layout & Spacing */
   --section-spacing: 6rem;
@@ -54,51 +66,45 @@
   /* Retained from original globals.css if not directly replaced, or for reference */
   --input: 214.3 31.8% 91.4%; /* Original, may need updating if new input styles don't cover */
   --ring: 222.2 84% 4.9%; /* Original, may need updating */
-  --secondary: 210 40% 96.1%; /* Original */
+  --secondary: #8b5cf6;
   --secondary-foreground: 222.2 47.4% 11.2%; /* Original */
-  --accent: 210 40% 96.1%; /* Original */
+  --secondary-rgb: 139, 92, 246;
+  --accent: #0ea5e9;
   --accent-foreground: 222.2 47.4% 11.2%; /* Original */
+  --accent-rgb: 14, 165, 233;
+  --primary-rgb: 99, 102, 241;
+  --primary-light: #a5b4fc;
+  --primary-light-rgb: 165, 180, 252;
+  --foreground-dark: #f8fafc;
+  --background-dark: #0f172a;
   /* --radius: 0.5rem; /* Already defined, ensuring consistency */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    /* New Design System Variables - Dark Mode */
-    --background: #18181b; /* Overrides --background-dark naming for simplicity */
-    --foreground: #fafafa; /* Overrides --foreground-dark naming for simplicity */
+/* Dark Mode Overrides */
+.dark:root, /* Applied to html.dark */
+html.dark {
+  --foreground: #f8fafc;
+  --background: #0f172a;
+  --muted: #94a3b8;
+  
+  --card-bg: #1e293b;
+  --card-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+  --border: 1px solid #334155;
 
-    --card-bg: #23232a; /* Overrides --card-bg-dark */
-    --border: 1px solid #23232a; /* Overrides --border-dark */
-    --muted: #a1a1aa; /* Overrides --muted-dark */
+  /* Header Specific - Dark Mode */
+  --header-bg: rgba(15, 23, 42, 0.8); /* Darker background for header in dark mode */
+  --header-shadow: 0 2px 16px 0 rgba(0,0,0,0.1), 0 1.5px 0 0 rgba(255,255,255,0.05);
+  --header-border: 1px solid rgba(255,255,255,0.07);
 
-    /* Header Specific - Dark Mode */
-    --header-bg: rgba(34, 34, 34, 0.8); /* Overrides --header-bg-dark */
-    --header-border: 1px solid rgba(255,255,255,0.07); /* Overrides --header-border-dark */
+  /* Footer Specific - Dark Mode */
+  --footer-bg: rgba(15,23,42,0.85);
+  --footer-border: 1px solid rgba(255,255,255,0.07);
+  --footer-muted: #a1a1aa;
 
-    /* Footer Specific - Dark Mode */
-    --footer-bg: rgba(24,24,27,0.85); /* Overrides --footer-bg-dark */
-    --footer-border: 1px solid rgba(255,255,255,0.07); /* Overrides --footer-border-dark */
-    --footer-muted: #a1a1aa; /* Overrides --footer-muted-dark */
-    
-    /* Admin Specific - Dark Mode */
-    --error-bg: #3b1d1d; /* Overrides --error-bg-dark */
-
-    /* Retained/adapted from original globals.css dark theme if not directly replaced */
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --primary: #6c47ff; /* Primary color often stays same or similar in dark mode for branding */
-    --primary-foreground: #fff;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --destructive: #b91c1c; /* Adjusted destructive for dark, or keep as is */
-    --destructive-foreground: #fff;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-  }
+  /* Other dark mode specific overrides if any */
+  /* For example, ensure primary/secondary/accent colors are still vibrant if needed */
+  /* Or adjust their foregrounds specifically for dark mode if white is not suitable */
 }
-
-/* Keep the @theme block if you plan to use it for other Tailwind v4 specific features,
-   but the HSL values above are what tailwind.config.js primarily needs for hsl(var(--...)) */
 
 html {
   font-size: 16px;
@@ -140,4 +146,37 @@ a {
   max-width: 65ch;
   margin: 0 auto;
   padding: 0 1rem;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  font-family: var(--font-body, Inter, system-ui, sans-serif); /* Added Inter */
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--foreground);
+  transition: background 0.3s ease, color 0.3s ease; /* Smooth theme transition */
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+html.dark {
+  color-scheme: dark; /* This helps browser style some UI elements like scrollbars */
 }

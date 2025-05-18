@@ -1,171 +1,283 @@
 /* AboutPage.module.css */
 
+:global(:root) {
+  --section-spacing: clamp(4rem, 8vw, 8rem);
+  --content-width: min(90%, 1200px);
+  /* --border-radius: 12px; Already in globals.css, can be removed if not overriding */
+}
+
 .page {
   display: flex;
   flex-direction: column;
-  gap: 4rem;
-  padding-bottom: 4rem;
+  gap: var(--section-spacing);
+  padding-bottom: 6rem;
+  overflow-x: hidden;
+  width: 100%; /* Changed from 100vw to prevent potential horizontal scroll issues with 100vw on nested elements */
 }
 
+/* Hero Section */
 .heroSection {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  min-height: 70vh;
-  width: 100vw;
-  padding: 0;
+  width: 100%;
+  padding: 6rem 1rem 2rem;
+  position: relative;
 }
+
+.heroSection::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--muted), transparent);
+  opacity: 0.4;
+}
+
 .heroTitle {
-  font-size: 2.5rem;
+  font-size: clamp(2.5rem, 6vw, 4rem);
   font-weight: 800;
   letter-spacing: -0.03em;
   color: var(--foreground);
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   line-height: 1.1;
-}
-.heroSubtitle {
-  font-size: 1.25rem;
-  color: var(--muted);
-  max-width: 40rem;
-  margin: 0 auto;
-  line-height: 1.6;
-}
-@media (prefers-color-scheme: dark) {
-  .heroTitle {
-    color: var(--foreground-dark);
-  }
-  .heroSubtitle {
-    color: var(--muted-dark);
-  }
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease, color 0.3s ease; /* Added color transition */
 }
 
+.heroSubtitle {
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  color: var(--muted);
+  margin: 0 auto;
+  line-height: 1.6;
+  max-width: 680px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s, color 0.3s ease; /* Added color transition */
+}
+
+/* Profile Section */
 .profileSection {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2.5rem;
-  width: 100vw;
+  gap: clamp(2.5rem, 5vw, 4rem);
+  width: 100%;
+  margin: 0 auto;
+  max-width: var(--content-width);
   padding: 0 1.5rem;
   box-sizing: border-box;
 }
+
 @media (min-width: 900px) {
   .profileSection {
     flex-direction: row;
-    gap: 3.5rem;
+    gap: 5rem;
+    align-items: flex-start;
     min-height: 60vh;
   }
 }
+
 .profileImageWrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   flex: 0 0 auto;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
+
 .profileImagePlaceholder {
-  width: 12rem;
-  height: 12rem;
-  background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
-  color: var(--muted);
+  width: clamp(12rem, 18vw, 16rem);
+  height: clamp(12rem, 18vw, 16rem);
+  background: linear-gradient(135deg, var(--primary-light, #e0e7ff) 0%, var(--primary, #c7d2fe) 100%); /* Use CSS vars */
+  color: var(--primary-foreground, var(--foreground)); /* Use CSS vars */
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 3rem;
+  font-size: clamp(3rem, 6vw, 4rem);
   font-weight: 700;
-  box-shadow: 0 4px 32px 0 rgba(108,71,255,0.10);
+  box-shadow: 
+    0 20px 40px rgba(var(--primary-rgb, 108, 71, 255), 0.12),
+    0 0 0 1px rgba(var(--primary-rgb, 108, 71, 255), 0.05);
   user-select: none;
   letter-spacing: -0.03em;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
 }
-@media (prefers-color-scheme: dark) {
-  .profileImagePlaceholder {
-    background: linear-gradient(135deg, #23232a 0%, #373749 100%);
-    color: var(--muted-dark);
-  }
+
+html.dark .profileImagePlaceholder {
+  background: linear-gradient(135deg, #2a2a35 0%, #373749 100%);
+  color: var(--foreground); /* Should be --foreground-dark from globals, but var(--foreground) will pick it up */
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
 }
+
+.profileImagePlaceholder:hover {
+  transform: translateY(-5px);
+  box-shadow: 
+    0 25px 50px rgba(var(--primary-rgb, 108, 71, 255), 0.18),
+    0 0 0 1px rgba(var(--primary-rgb, 108, 71, 255), 0.08);
+}
+
+html.dark .profileImagePlaceholder:hover {
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
 .profileBio {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.8rem;
   align-items: center;
   justify-content: center;
   text-align: center;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
 }
+
 @media (min-width: 900px) {
   .profileBio {
     align-items: flex-start;
     text-align: left;
-  }
-}
-.profileName {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  color: var(--foreground);
-}
-@media (prefers-color-scheme: dark) {
-  .profileName {
-    color: var(--foreground-dark);
-  }
-}
-.profileText {
-  font-size: 1.1rem;
-  color: var(--muted);
-  line-height: 1.7;
-}
-@media (prefers-color-scheme: dark) {
-  .profileText {
-    color: var(--muted-dark);
+    max-width: 60%;
   }
 }
 
-.interestsSection {
-  padding: 2.5rem 0 0 0;
-  text-align: center;
-}
-.interestsTitle {
-  font-size: 2rem;
+.profileName {
+  font-size: clamp(2rem, 4vw, 2.5rem);
   font-weight: 700;
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
   color: var(--foreground);
+  position: relative;
+  display: inline-block;
+  transition: color 0.3s ease;
 }
-@media (prefers-color-scheme: dark) {
-  .interestsTitle {
-    color: var(--foreground-dark);
+
+.profileName::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: var(--primary);
+  border-radius: 3px;
+  transition: background 0.3s ease;
+}
+
+@media (max-width: 899px) {
+  .profileName::after {
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
+
+.profileText {
+  font-size: clamp(1.1rem, 1.5vw, 1.25rem);
+  color: var(--muted);
+  line-height: 1.8;
+  transition: color 0.3s ease;
+}
+
+.profileText strong {
+  color: var(--foreground);
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+/* Interests Section */
+.interestsSection {
+  padding: 2rem 1.5rem;
+  width: 100%;
+  text-align: center;
+  margin: 0 auto;
+  max-width: var(--content-width);
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
+}
+
+.interestsTitle {
+  font-size: clamp(2rem, 3vw, 2.5rem);
+  font-weight: 700;
+  margin-bottom: 3rem;
+  color: var(--foreground);
+  position: relative;
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+.interestsTitle::after {
+  content: "";
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 3px;
+  background: var(--primary);
+  border-radius: 3px;
+  transition: background 0.3s ease;
+}
+
+.interestsContainer {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .interestsList {
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
+  max-width: 800px;
   justify-content: center;
-  gap: 1rem;
+  gap: clamp(0.8rem, 1.5vw, 1.2rem);
 }
+
 .interestTag {
-  background: #f3f4f6;
+  background: rgba(243, 244, 246, 0.7);
   color: var(--foreground);
-  padding: 0.6rem 1.4rem;
+  padding: 0.8rem 1.6rem;
   border-radius: 999px;
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 1.2vw, 1.1rem);
   font-weight: 500;
-  box-shadow: 0 2px 8px 0 rgba(108,71,255,0.07);
-  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   cursor: default;
   user-select: none;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transform: translateY(0);
 }
-.interestTag:hover, .interestTag:focus-visible {
+
+html.dark .interestTag {
+  background: rgba(35, 35, 42, 0.7);
+  color: var(--foreground); /* This will pick up --foreground-dark due to .dark on html */
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.interestTag:hover, 
+.interestTag:focus-visible {
   background: var(--primary);
-  color: #fff;
-  box-shadow: 0 4px 16px 0 rgba(108,71,255,0.13);
+  color: var(--primary-foreground, #fff);
+  box-shadow: 0 6px 20px rgba(var(--primary-rgb, 108, 71, 255), 0.2);
+  transform: translateY(-5px) scale(1.05);
 }
-@media (prefers-color-scheme: dark) {
-  .interestTag {
-    background: #23232a;
-    color: var(--foreground-dark);
-  }
-  .interestTag:hover, .interestTag:focus-visible {
-    background: var(--primary);
-    color: #fff;
-  }
-} 
+
+/* Removed the @media (prefers-color-scheme: dark) block as styles are now 
+   handled by html.dark and CSS variables from globals.css */
+
+/* Removed the @media (prefers-color-scheme: dark) block as styles are now 
+   handled by html.dark and CSS variables from globals.css */ 

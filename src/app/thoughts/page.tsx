@@ -39,16 +39,16 @@ export default async function ThoughtsPage() {
 
       <section className={styles.postsSection}>
         {allPosts.map((post: Post) => (
-          <Card key={post.slug} className={styles.postCard}>
+          <article key={post.slug} className={styles.postCard}>
             <header className={styles.postHeader}>
+              <time dateTime={post.frontmatter.date} className={styles.postDate}>
+                {formatDate(post.frontmatter.date)}
+              </time>
               <h2 className={styles.postTitle}>
                 <Link href={`/thoughts/${post.slug}`} className={styles.postTitleLink}>
                   {post.frontmatter.title}
                 </Link>
               </h2>
-              <time dateTime={post.frontmatter.date} className={styles.postDate}>
-                {formatDate(post.frontmatter.date)}
-              </time>
             </header>
             <p className={styles.postExcerpt}>
               {post.frontmatter.excerpt}
@@ -57,7 +57,7 @@ export default async function ThoughtsPage() {
               href={`/thoughts/${post.slug}`} 
               className={styles.readMore}
             >
-              Read more &rarr;
+              Read more
             </Link>
             {post.frontmatter.tags && post.frontmatter.tags.length > 0 && (
               <div className={styles.tagsList}>
@@ -66,7 +66,7 @@ export default async function ThoughtsPage() {
                 ))}
               </div>
             )}
-          </Card>
+          </article>
         ))}
       </section>
     </div>

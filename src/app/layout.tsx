@@ -1,31 +1,38 @@
+import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "../styles/globals.css";
-import Layout from "@/components/layout/Layout";
-import { Metadata } from 'next';
+import "./globals.css";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 const inter = Inter({
   subsets: ["latin"],
+  display: "swap",
   variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
-  title: 'My Creative Blog',
-  description: 'A personal blog built with Next.js, GSAP, and Lenis.',
+  title: "Owen Bueno - Creative Space",
+  description: "Personal blog and portfolio of Owen Bueno, a software developer.",
   icons: {
-    icon: "/favicon.svg",
+    icon: "/favicon.ico",
   },
 };
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode
-}) {
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <html lang="en" className={`${inter.variable} antialiased`}>
+    <html lang="en" className={inter.variable}>
       <body>
-        <Layout>{children}</Layout>
+        <ThemeProvider>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }
