@@ -67,7 +67,7 @@ export default function HomePage() {
             <div className={styles.featureCardContent}>
               <h3 className={styles.featureCardTitle}>Tech Explorations</h3>
               <p className={styles.featureCardText}>
-              A showcase of what I'm building—code experiments, tools, designs, and side projects. I share the process, not just the results, so you can see how things evolve.
+              A showcase of what I&apos;m building—code experiments, tools, designs, and side projects. I share the process, not just the results, so you can see how things evolve.
               </p>
             </div>
           </Card>

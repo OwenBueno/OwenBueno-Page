@@ -72,7 +72,7 @@ export default function ProjectsPage() {
       <section className={styles.heroSection}>
         <h1 className={styles.heroTitle}>My Projects</h1>
         <p className={styles.heroSubtitle}>
-          A selection of projects I'm proud to have worked on. From web applications to open source contributions and personal experiments.
+          A selection of projects I&apos;m proud to have worked on. From web applications to open source contributions and personal experiments.
         </p>
       </section>
 

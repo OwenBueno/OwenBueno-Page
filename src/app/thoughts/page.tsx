@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { getSortedPostsData, Post } from '@/lib/posts';
 import { Metadata } from 'next';
-import Card from '@/components/ui/Card';
+// import Card from '@/components/ui/Card'; // Removed if present
 import TagPill from '@/components/ui/TagPill';
 import styles from './ThoughtsPage.module.css';
 
@@ -10,7 +10,6 @@ export const metadata: Metadata = {
   description: 'A collection of articles and reflections.',
 };
 
-// Helper function to format date (optional, can be done inline or with a date library)
 function formatDate(dateString: string): string {
   const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
   return new Date(dateString).toLocaleDateString(undefined, options);

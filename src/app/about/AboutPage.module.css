@@ -1,12 +1,8 @@
 /* AboutPage.module.css */
 
-:global(:root) {
+.page {
   --section-spacing: clamp(4rem, 8vw, 8rem);
   --content-width: min(90%, 1200px);
-  /* --border-radius: 12px; Already in globals.css, can be removed if not overriding */
-}
-
-.page {
   display: flex;
   flex-direction: column;
   gap: var(--section-spacing);

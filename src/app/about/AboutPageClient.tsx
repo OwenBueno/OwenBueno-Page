@@ -43,6 +43,7 @@ export default function AboutPageClient() { // Renamed from AboutPage
     };
     
     // Use type assertion to bypass TypeScript checking
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const lenis = new Lenis(lenisOptions as any);
 
     function raf(time: number): void {

@@ -2,15 +2,6 @@
 
 /* Define local fallbacks or specific project card variables if needed, 
    otherwise rely on globals.css for --card-bg, --card-shadow etc. */
-:global(:root) {
-  --card-transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  --content-max-width: 1280px;
-  /* These can be removed if --card-bg and --card-shadow from globals.css are sufficient */
-  /* --project-card-bg: var(--card-bg); */
-  /* --project-card-bg-dark: var(--card-bg-dark); */ 
-  /* --project-card-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); */
-  /* --project-card-hover-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); */
-}
 
 .page {
   display: flex;
