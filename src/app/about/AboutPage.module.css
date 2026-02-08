@@ -1,14 +1,13 @@
 /* AboutPage.module.css */
 
 .page {
-  --section-spacing: clamp(4rem, 8vw, 8rem);
+  --section-spacing: clamp(4rem, 8vw, 1rem);
   --content-width: min(90%, 1200px);
   display: flex;
   flex-direction: column;
   gap: var(--section-spacing);
-  padding-bottom: 6rem;
   overflow-x: hidden;
-  width: 100%; /* Changed from 100vw to prevent potential horizontal scroll issues with 100vw on nested elements */
+  width: 100%;
 }
 
 /* Hero Section */
@@ -42,9 +41,7 @@
   color: var(--foreground);
   margin-bottom: 1.5rem;
   line-height: 1.1;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease, color 0.3s ease; /* Added color transition */
+  transition: color 0.3s ease;
 }
 
 .heroSubtitle {
@@ -53,9 +50,7 @@
   margin: 0 auto;
   line-height: 1.6;
   max-width: 680px;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s, color 0.3s ease; /* Added color transition */
+  transition: color 0.3s ease;
 }
 
 /* Profile Section */
@@ -83,47 +78,35 @@
 
 .profileImageWrapper {
   flex: 0 0 auto;
-  opacity: 0;
-  transform: scale(0.9);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.profileImagePlaceholder {
+  position: relative;
   width: clamp(12rem, 18vw, 16rem);
   height: clamp(12rem, 18vw, 16rem);
-  background: linear-gradient(135deg, var(--primary-light, #e0e7ff) 0%, var(--primary, #c7d2fe) 100%); /* Use CSS vars */
-  color: var(--primary-foreground, var(--foreground)); /* Use CSS vars */
+}
+
+.profileImage {
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: clamp(3rem, 6vw, 4rem);
-  font-weight: 700;
-  box-shadow: 
+  object-fit: cover;
+  box-shadow:
     0 20px 40px rgba(var(--primary-rgb, 108, 71, 255), 0.12),
     0 0 0 1px rgba(var(--primary-rgb, 108, 71, 255), 0.05);
-  user-select: none;
-  letter-spacing: -0.03em;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-html.dark .profileImagePlaceholder {
-  background: linear-gradient(135deg, #2a2a35 0%, #373749 100%);
-  color: var(--foreground); /* Should be --foreground-dark from globals, but var(--foreground) will pick it up */
-  box-shadow: 
-    0 20px 40px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(255, 255, 255, 0.05);
-}
-
-.profileImagePlaceholder:hover {
+.profileImage:hover {
   transform: translateY(-5px);
-  box-shadow: 
+  box-shadow:
     0 25px 50px rgba(var(--primary-rgb, 108, 71, 255), 0.18),
     0 0 0 1px rgba(var(--primary-rgb, 108, 71, 255), 0.08);
 }
 
-html.dark .profileImagePlaceholder:hover {
-  box-shadow: 
+html.dark .profileImage {
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+html.dark .profileImage:hover {
+  box-shadow:
     0 25px 50px rgba(0, 0, 0, 0.5),
     0 0 0 1px rgba(255, 255, 255, 0.08);
 }
@@ -135,9 +118,6 @@ html.dark .profileImagePlaceholder:hover {
   align-items: center;
   justify-content: center;
   text-align: center;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
 }
 
 @media (min-width: 900px) {
@@ -184,6 +164,18 @@ html.dark .profileImagePlaceholder:hover {
   transition: color 0.3s ease;
 }
 
+.textLink {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.textLink:hover {
+  border-color: var(--primary);
+}
+
 .profileText strong {
   color: var(--foreground);
   font-weight: 600;
@@ -192,14 +184,11 @@ html.dark .profileImagePlaceholder:hover {
 
 /* Interests Section */
 .interestsSection {
-  padding: 2rem 1.5rem;
+  padding: 1rem 1.5rem;
   width: 100%;
   text-align: center;
   margin: 0 auto;
   max-width: var(--content-width);
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
 }
 
 .interestsTitle {

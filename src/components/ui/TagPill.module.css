@@ -14,12 +14,10 @@
   white-space: nowrap;
 }
 
-@media (prefers-color-scheme: dark) {
-  .tagPill {
-    background: rgba(var(--primary-rgb, 99, 102, 241), 0.15);
-    color: rgba(var(--primary-rgb, 99, 102, 241), 0.9);
-    border-color: rgba(var(--primary-rgb, 99, 102, 241), 0.25);
-  }
+html.dark .tagPill {
+  background: rgba(var(--primary-rgb, 99, 102, 241), 0.15);
+  color: var(--primary-light, #a5b4fc);
+  border-color: rgba(var(--primary-rgb, 99, 102, 241), 0.25);
 }
 
 /* Allow for variations in color */
@@ -33,4 +31,4 @@
   background: rgba(var(--accent-rgb, 14, 165, 233), 0.1);
   color: var(--accent, #0ea5e9);
   border-color: rgba(var(--accent-rgb, 14, 165, 233), 0.15);
-} 
+}

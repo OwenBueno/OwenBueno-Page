@@ -7,14 +7,15 @@ import Link from 'next/link';
 import remarkGfm from 'remark-gfm'; // For GitHub Flavored Markdown (tables, strikethrough, etc.)
 import TagPill from '@/components/ui/TagPill';
 import styles from './ThoughtPostPage.module.css';
+import ThoughtPostClient from './ThoughtPostClient';
 
 interface ThoughtSlugParams {
   slug: string;
 }
 
 // Function to generate metadata for each post page
-export async function generateMetadata({ params }: any): Promise<Metadata> {
-  const { slug } = params;
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
   const post = await getPostData(slug);
 
   if (!post) {
@@ -50,49 +51,49 @@ function formatDate(dateString: string): string {
   return new Date(dateString).toLocaleDateString(undefined, options);
 }
 
-export default async function ThoughtPostPage({ params }: any) {
-  const { slug } = params;
+export default async function ThoughtPostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   const post = await getPostData(slug);
 
   if (!post) {
-    notFound(); // Triggers the not-found page
+    notFound();
   }
 
   const mdxOptions = {
     remarkPlugins: [remarkGfm],
-    // rehypePlugins: [], // Add any rehype plugins here if needed (e.g., for syntax highlighting)
   };
 
   return (
-    <article className={styles.article}>
-      <header className={styles.header}>
-        <h1 className={styles.title}>
-          {post.frontmatter.title}
-        </h1>
-        <time dateTime={post.frontmatter.date} className={styles.date}>
-          {formatDate(post.frontmatter.date)}
-        </time>
-        {post.frontmatter.tags && post.frontmatter.tags.length > 0 && (
-          <div className={styles.tagsList}>
-            {post.frontmatter.tags.map((tag) => (
-              <TagPill key={tag}>
-                <Link href={`/tags/${tag}`}>#{tag}</Link>
-              </TagPill>
-            ))}
-          </div>
-        )}
-      </header>
+    <ThoughtPostClient>
+      <article className={styles.article}>
+        <header className={styles.header}>
+          <h1 className={styles.title}>
+            {post.frontmatter.title}
+          </h1>
+          <time dateTime={post.frontmatter.date} className={styles.date}>
+            {formatDate(post.frontmatter.date)}
+          </time>
+          {post.frontmatter.tags && post.frontmatter.tags.length > 0 && (
+            <div className={styles.tagsList}>
+              {post.frontmatter.tags.map((tag) => (
+                <TagPill key={tag}>
+                  <Link href={`/tags/${tag}`}>#{tag}</Link>
+                </TagPill>
+              ))}
+            </div>
+          )}
+        </header>
 
-      {/* Apply prose styles for MDX content for better readability */}
-      <div className={styles.proseContent}>
-        <MDXRemote source={post.content} options={{ mdxOptions }} />
-      </div>
+        <div className={styles.proseContent}>
+          <MDXRemote source={post.content} options={{ mdxOptions }} />
+        </div>
 
-      <div className={styles.backLinkWrapper}>
-        <Link href="/thoughts" className={styles.backLink}>
-          &larr; Back to all thoughts
-        </Link>
-      </div>
-    </article>
+        <div className={styles.backLinkWrapper}>
+          <Link href="/thoughts" className={styles.backLink}>
+            &larr; Back to all thoughts
+          </Link>
+        </div>
+      </article>
+    </ThoughtPostClient>
   );
-} 
+}

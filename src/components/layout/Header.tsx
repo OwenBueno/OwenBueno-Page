@@ -45,7 +45,7 @@ const Header = () => {
           href="/"
           className={styles.logo}
         >
-          <h1 className={styles.logoText}>My Creative Space</h1>
+          <h1 className={styles.logoText}>OwenBueno</h1>
         </Link>
 
         <div className={styles.navActions}>

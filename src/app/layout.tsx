@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { ThemeProvider } from "@/context/ThemeContext";
+import SmoothScroll from "@/components/ui/SmoothScroll";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -28,9 +29,11 @@ export default function RootLayout({
     <html lang="en" className={inter.variable}>
       <body>
         <ThemeProvider>
-          <Header />
-          <main>{children}</main>
-          <Footer />
+          <SmoothScroll>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+          </SmoothScroll>
         </ThemeProvider>
       </body>
     </html>

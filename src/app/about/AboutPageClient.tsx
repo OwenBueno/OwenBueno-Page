@@ -1,200 +1,164 @@
 "use client";
+
 import React, { useEffect, useRef } from 'react';
+import Image from 'next/image';
 import styles from './AboutPage.module.css';
-import Lenis from 'lenis';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import { calculateAge } from '@/lib/utils';
+import Link from 'next/link';
+
+// Register GSAP plugins
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const interests = [
   'Web Development',
   'Creative Coding',
   'UI/UX Design',
-  'Sports',
-  'Minimalism',
-  'Tech Innovation',
-  'Video Games',
-  'Artificial Intelligence',
+  'Vibe Code',
+  'NTT DATA',
+  'Toyota Projects',
+  'AI Assistants',
   'Open Source',
+  'Functional Workouts',
 ];
 
-// Define custom interface for Lenis options
-interface CustomLenisOptions {
-  duration?: number;
-  easing?: (t: number) => number;
-  smooth?: boolean;
-  mouseMultiplier?: number;
-  touchMultiplier?: number;
-}
-
-export default function AboutPageClient() { // Renamed from AboutPage
-  const heroRef = useRef<HTMLElement>(null);
-  const profileImageRef = useRef<HTMLDivElement>(null);
-  const profileBioRef = useRef<HTMLDivElement>(null);
-  const interestsSectionRef = useRef<HTMLElement>(null);
+export default function AboutPageClient() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const age = calculateAge('2002-01-03'); // Born 01/3/2002
 
   useEffect(() => {
-    // Initialize smooth scrolling with Lenis
-    const lenisOptions: CustomLenisOptions = {
-      duration: 1.2,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smooth: true,
-      mouseMultiplier: 1,
-      touchMultiplier: 2,
-    };
-    
-    // Use type assertion to bypass TypeScript checking
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const lenis = new Lenis(lenisOptions as any);
+    if (!containerRef.current) return;
 
-    function raf(time: number): void {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
+    const ctx = gsap.context((self) => {
+      const heroTl = gsap.timeline();
+      heroTl.from(self.selector?.(`.${styles.heroTitle}`), {
+        y: 40,
+        opacity: 0,
+        duration: 1,
+        ease: "power4.out"
+      })
+      .from(self.selector?.(`.${styles.heroSubtitle}`), {
+        y: 20,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power3.out"
+      }, "-=0.6");
 
-    requestAnimationFrame(raf);
+      const profileSection = self.selector?.(`.${styles.profileSection}`);
+      if (profileSection) {
+        gsap.from(self.selector?.(`.${styles.profileImage}`), {
+          scrollTrigger: {
+            trigger: profileSection,
+            start: "top 85%",
+            toggleActions: "play none none none"
+          },
+          x: -30,
+          opacity: 0,
+          duration: 1,
+          ease: "power3.out"
+        });
 
-    // Register ScrollTrigger with GSAP
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Animation for hero section
-    if (heroRef.current) {
-      const heroTitle = heroRef.current.querySelector(`.${styles.heroTitle}`);
-      const heroSubtitle = heroRef.current.querySelector(`.${styles.heroSubtitle}`);
-      
-      if (heroTitle) {
-        gsap.to(heroTitle, {
-          opacity: 1,
-          y: 0,
+        gsap.from(self.selector?.(`.${styles.profileBio} > *`), {
+          scrollTrigger: {
+            trigger: profileSection,
+            start: "top 80%",
+            toggleActions: "play none none none"
+          },
+          x: 30,
+          opacity: 0,
           duration: 0.8,
-          ease: "power3.out",
+          stagger: 0.15,
+          ease: "power3.out"
         });
       }
-      
-      if (heroSubtitle) {
-        gsap.to(heroSubtitle, {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          delay: 0.2,
-          ease: "power3.out",
-        });
-      }
-    }
 
-    // Animation for profile section
-    if (profileImageRef.current) {
-      gsap.to(profileImageRef.current, {
-        opacity: 1,
-        scale: 1,
-        duration: 0.8,
-        ease: "back.out(1.7)",
-        scrollTrigger: {
-          trigger: profileImageRef.current,
-          start: "top 80%",
-          toggleActions: "play none none none"
-        }
-      });
-    }
-
-    if (profileBioRef.current) {
-      gsap.to(profileBioRef.current, {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: profileBioRef.current,
-          start: "top 80%",
-          toggleActions: "play none none none"
-        }
-      });
-    }
-
-    // Animation for interests section
-    if (interestsSectionRef.current) {
-      gsap.to(interestsSectionRef.current, {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: interestsSectionRef.current,
-          start: "top 80%",
-          toggleActions: "play none none none"
-        }
-      });
-
-      // Staggered animation for interest tags
-      const interestTags = interestsSectionRef.current.querySelectorAll(`.${styles.interestTag}`);
-      if (interestTags.length) {
-        gsap.fromTo(
-          interestTags,
-          { opacity: 0, y: 20 },
-          { 
-            opacity: 1, 
-            y: 0, 
-            duration: 0.4,
-            stagger: 0.06,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: interestsSectionRef.current,
-              start: "top 70%",
-              toggleActions: "play none none none"
-            }
+      // 3. Current Focus Section - New Animation Strategy
+      // Instead of hiding them with from(), we'll use a "Reveal" approach
+      const interestsSection = self.selector?.(`.${styles.interestsSection}`);
+      if (interestsSection) {
+        const interestsTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: interestsSection,
+            start: "top 95%", // Trigger very early
+            toggleActions: "play none none none"
           }
-        );
-      }
-    }
+        });
 
-    // Clean up
-    return () => {
-      lenis.destroy();
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    };
+        interestsTl.from(self.selector?.(`.${styles.interestsTitle}`), {
+          y: 30,
+          opacity: 0,
+          duration: 1,
+          ease: "power3.out"
+        })
+        .from(self.selector?.(`.${styles.interestTag}`), {
+          opacity: 0,
+          scale: 0.9,
+          y: 10,
+          stagger: {
+            each: 0.05,
+            from: "start"
+          },
+          duration: 0.5,
+          ease: "power2.out",
+          clearProps: "opacity,transform"
+        }, "-=0.5");
+      }
+
+      const refreshST = () => ScrollTrigger.refresh();
+      window.addEventListener('load', refreshST);
+      setTimeout(refreshST, 1000);
+
+      return () => window.removeEventListener('load', refreshST);
+    }, containerRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (
-    <div className={styles.page}>
-      <section className={styles.heroSection} ref={heroRef}>
+    <div className={styles.page} ref={containerRef}>
+      <section className={styles.heroSection}>
         <h1 className={styles.heroTitle}>About Me</h1>
         <p className={styles.heroSubtitle}>
-          A little bit about who I am, my passions, and what drives my curiosity.
+          Software developer, creative explorer, and builder of digital experiences.
         </p>
       </section>
 
       <section className={styles.profileSection}>
-        <div className={styles.profileImageWrapper} ref={profileImageRef}>
-          {/* Replace with your actual image if desired */}
-          <div className={styles.profileImagePlaceholder}>
-            <span>OB</span>
-          </div>
+        <div className={styles.profileImageWrapper}>
+          <Image
+            src="/images/Owen_Photo.jpeg"
+            alt="Owen Bueno - Software Developer"
+            fill
+            className={styles.profileImage}
+            priority
+          />
         </div>
-        <div className={styles.profileBio} ref={profileBioRef}>
-          <h2 className={styles.profileName}>Hello, I&apos;m OwenBueno</h2>
+        <div className={styles.profileBio}>
+          <h2 className={styles.profileName}>Hello, I&apos;m Owen Bueno</h2>
           <p className={styles.profileText}>
-          I&apos;m a 23-year-old software engineer from Mexico {new Date().getFullYear() - 2002}, passionate about creating things that enhance user experiences and make the world a little better through technology.
+            I&apos;m a {age}-year-old software engineer based in Mexico. I have a deep passion for <strong>vibe code</strong>—creating software that doesn&apos;t just work, but feels right.
           </p>
           <p className={styles.profileText}>
-          I currently work at Filup RH while also building my own projects—like <strong>Laneta Estudio</strong> and a new SaaS platform focused on AI-powered assistants for companies and individuals. I love open source and try to share all my projects publicly whenever possible.
+            My professional journey has taken me from working at <strong>Filup RH</strong> to my current roles at <strong>NTT DATA</strong> and <strong>Toyota</strong>, where I tackle complex challenges and build scalable solutions.
           </p>
           <p className={styles.profileText}>
-          Outside of coding, I enjoy playing video games, having deep conversations, and staying active with running and functional workouts. 
+            When I&apos;m not in the office, you&apos;ll find me <Link href="/projects" className={styles.textLink}>working on my personal projects</Link>, enjoying the art of code, and exploring new technologies like AI-powered assistants and creative web design.
           </p>
           <p className={styles.profileText}>
-            This blog is my digital playground—a space to share my thoughts, projects, and explorations. Thanks for reading, and I truly hope you enjoy exploring what you find here.
+            I believe in the power of continuous learning and sharing. This space is where I document my journey, share my thoughts, and showcase the projects I&apos;m most proud of.
           </p>
         </div>
       </section>
 
-      <section className={styles.interestsSection} ref={interestsSectionRef}>
-        <h2 className={styles.interestsTitle}>My Interests</h2>
+      <section className={styles.interestsSection}>
+        <h2 className={styles.interestsTitle}>Current Focus</h2>
         <div className={styles.interestsContainer}>
           <div className={styles.interestsList}>
             {interests.map((interest) => (
-              <span 
-                key={interest} 
-                className={styles.interestTag}
-              >
+              <span key={interest} className={styles.interestTag}>
                 {interest}
               </span>
             ))}
@@ -203,4 +167,4 @@ export default function AboutPageClient() { // Renamed from AboutPage
       </section>
     </div>
   );
-} 
+}

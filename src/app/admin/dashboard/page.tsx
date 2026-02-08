@@ -43,7 +43,16 @@ export default async function AdminDashboardPage() {
               >
                 Create New Post
               </Link>
-              {/* Add link to view/edit posts later */}
+            </Card>
+            <Card className={styles.gridCard}>
+              <h3 className={styles.gridCardTitle}>Manage Projects</h3>
+              <p className={styles.gridCardText}>Add new projects to your portfolio.</p>
+              <Link 
+                href="/admin/new-project"
+                className={styles.gridCardButton}
+              >
+                Create New Project
+              </Link>
             </Card>
             {/* Add more admin sections/cards here as needed */}
           </div>
