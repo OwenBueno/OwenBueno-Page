@@ -7,8 +7,8 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { calculateAge } from '@/lib/utils';
 import Link from 'next/link';
+import { useHydrated } from '@/lib/hooks';
 
-// Register GSAP plugins
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
@@ -27,6 +27,7 @@ const interests = [
 
 export default function AboutPageClient() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const hydrated = useHydrated();
   const age = calculateAge('2002-01-03'); // Born 01/3/2002
 
   useEffect(() => {
@@ -139,7 +140,7 @@ export default function AboutPageClient() {
         <div className={styles.profileBio}>
           <h2 className={styles.profileName}>Hello, I&apos;m Owen Bueno</h2>
           <p className={styles.profileText}>
-            I&apos;m a {age}-year-old software engineer based in Mexico. I have a deep passion for <strong>vibe code</strong>—creating software that doesn&apos;t just work, but feels right.
+            I&apos;m a {hydrated ? age : '...'} -year-old software engineer based in Mexico. I have a deep passion for <strong>vibe code</strong>—creating software that doesn&apos;t just work, but feels right.
           </p>
           <p className={styles.profileText}>
             My professional journey has taken me from working at <strong>Filup RH</strong> to my current roles at <strong>NTT DATA</strong> and <strong>Toyota</strong>, where I tackle complex challenges and build scalable solutions.

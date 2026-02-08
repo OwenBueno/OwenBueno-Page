@@ -9,6 +9,8 @@ import styles from './HomePage.module.css';
 import { Post } from '@/lib/posts';
 import { Project } from '@/lib/projects';
 import Image from 'next/image';
+import { useHydrated } from '@/lib/hooks';
+import { formatDate } from '@/lib/utils';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -21,6 +23,7 @@ interface HomePageClientProps {
 
 export default function HomePageClient({ allPosts, featuredProjects }: HomePageClientProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const hydrated = useHydrated();
   
   useEffect(() => {
     const ctx = gsap.context((self) => {
@@ -51,6 +54,7 @@ export default function HomePageClient({ allPosts, featuredProjects }: HomePageC
       }, '-=0.4');
 
       gsap.utils.toArray<HTMLElement>(self.selector?.(`.${styles.sectionTitle}`) || []).forEach((title) => {
+        if (!title) return;
         gsap.from(title, {
           scrollTrigger: {
             trigger: title,
@@ -72,7 +76,8 @@ export default function HomePageClient({ allPosts, featuredProjects }: HomePageC
         opacity: 0,
         duration: 0.8,
         stagger: 0.2,
-        ease: 'power3.out'
+        ease: 'power3.out',
+        clearProps: "all"
       });
 
       gsap.from(self.selector?.(`.${styles.projectCard}`), {
@@ -84,7 +89,8 @@ export default function HomePageClient({ allPosts, featuredProjects }: HomePageC
         opacity: 0,
         duration: 1,
         stagger: 0.2,
-        ease: 'power4.out'
+        ease: 'power4.out',
+        clearProps: "all"
       });
     }, containerRef);
 
@@ -124,9 +130,11 @@ export default function HomePageClient({ allPosts, featuredProjects }: HomePageC
           </Link>
         </div>
         <div className={styles.thoughtsGrid}>
-          {allPosts.map((post) => (
+          {allPosts && allPosts.length > 0 && allPosts.map((post) => (
             <Link key={post.slug} href={`/thoughts/${post.slug}`} className={styles.thoughtCard}>
-              <span className={styles.thoughtDate}>{new Date(post.frontmatter.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+              <span className={styles.thoughtDate}>
+                {hydrated ? formatDate(post.frontmatter.date) : ''}
+              </span>
               <h3 className={styles.thoughtTitle}>{post.frontmatter.title}</h3>
               <p className={styles.thoughtExcerpt}>{post.frontmatter.excerpt}</p>
               <div className={styles.viewAll} style={{ marginTop: 'auto' }}>
@@ -134,7 +142,7 @@ export default function HomePageClient({ allPosts, featuredProjects }: HomePageC
               </div>
             </Link>
           ))}
-          {allPosts.length === 0 && (
+          {(!allPosts || allPosts.length === 0) && (
             <div className={styles.thoughtCard}>
               <h3 className={styles.thoughtTitle}>More coming soon</h3>
               <p className={styles.thoughtExcerpt}>I&apos;m currently drafting some new pieces. Stay tuned!</p>

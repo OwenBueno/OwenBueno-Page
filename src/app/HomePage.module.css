@@ -156,7 +156,6 @@
 .thoughtCard:hover {
   transform: translateY(-10px);
   border-color: var(--primary);
-  background: white;
   box-shadow: 0 30px 60px rgba(var(--primary-rgb), 0.1);
 }
 

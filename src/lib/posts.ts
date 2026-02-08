@@ -15,19 +15,22 @@ export interface Post {
   content: string;
 }
 
-const postsDirectory = path.join(process.cwd(), 'src/content/thoughts');
+const postsDirectory = path.join(process.cwd(), 'src', 'content', 'thoughts');
 
 export function getSortedPostsData(): Post[] {
   // Get file names under /src/content/thoughts
   let fileNames: string[] = [];
   try {
-    fileNames = fs.readdirSync(postsDirectory);
+    if (fs.existsSync(postsDirectory)) {
+      fileNames = fs.readdirSync(postsDirectory);
+    }
   } catch (_error) {
     console.error("Error reading posts directory:", _error);
     return []; // Return empty if directory doesn't exist or is unreadable
   }
   
-  const allPostsData = fileNames
+    const currentDate = new Date().toISOString().split('T')[0];
+    const allPostsData = fileNames
     .filter((fileName) => fileName.endsWith('.md') || fileName.endsWith('.mdx'))
     .map((fileName) => {
       // Remove ".md" or ".mdx" from file name to get id
@@ -42,7 +45,13 @@ export function getSortedPostsData(): Post[] {
 
       return {
         slug,
-        frontmatter: matterResult.data as Post['frontmatter'],
+        frontmatter: {
+          title: matterResult.data.title || 'Untitled',
+          date: matterResult.data.date || currentDate,
+          excerpt: matterResult.data.excerpt || '',
+          tags: matterResult.data.tags || [],
+          ...matterResult.data,
+        },
         content: matterResult.content,
       };
     });

@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { getAllPostSlugs, getPostData } from '@/lib/posts';
 import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
@@ -8,6 +7,7 @@ import remarkGfm from 'remark-gfm'; // For GitHub Flavored Markdown (tables, str
 import TagPill from '@/components/ui/TagPill';
 import styles from './ThoughtPostPage.module.css';
 import ThoughtPostClient from './ThoughtPostClient';
+import { formatDate } from '@/lib/utils';
 
 interface ThoughtSlugParams {
   slug: string;
@@ -43,12 +43,6 @@ export async function generateStaticParams(): Promise<ThoughtSlugParams[]> {
   const paths = getAllPostSlugs();
   // Ensure the mapped result matches ThoughtSlugParams for { slug: string }
   return paths.map(p => ({ slug: p.params.slug })); 
-}
-
-// Helper function to format date
-function formatDate(dateString: string): string {
-  const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-  return new Date(dateString).toLocaleDateString(undefined, options);
 }
 
 export default async function ThoughtPostPage({ params }: { params: Promise<{ slug: string }> }) {

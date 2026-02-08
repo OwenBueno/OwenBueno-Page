@@ -17,4 +17,14 @@ export function useDebounce<T>(value: T, delay: number): T {
   }, [value, delay]); // Re-run effect only if value or delay changes
 
   return debouncedValue;
-} 
+}
+
+export function useHydrated() {
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
+  return hydrated;
+}
